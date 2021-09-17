@@ -9,19 +9,16 @@ import (
 )
 
 type Weather struct {
-	targetArea   string
-	headlineText string
-	text         string
+	TargetArea   string
+	HeadlineText string
+	Text         string
 }
 
-func GetWeather(w *Weather) string {
+func GetWeather() string {
 	url := "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/130000.json"
 	data := httpRequest(url)
 	weather := strToJson(data)
-	area := fmt.Sprintf("今日の天気は %s", weather.area)
-	head := fmt.Sprintf("今日の天気は %s", weather.headlineText)
-	text := fmt.Sprintf("今日の天気は %s", weather.text)
-	response := area + head + text
+	response := weather.ToS()
 	return response
 }
 
@@ -46,4 +43,11 @@ func strToJson(data string) *Weather {
 		log.Fatal("JSON Unmarshall Error", err)
 	}
 	return weather
+}
+
+func (w *Weather) ToS() string {
+	area := fmt.Sprintf("%sの天気です。\n", w.TargetArea)
+	head := fmt.Sprintf("%s\n", w.HeadlineText)
+	text := fmt.Sprintf("%s\n", w.Text)
+	return (area + head + text)
 }
