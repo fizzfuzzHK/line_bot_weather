@@ -14,12 +14,13 @@ type Weather struct {
 	Text         string
 }
 
-func GetWeather() string {
-	url := "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/130000.json"
+func GetWeather() {
+	url := "https://www.jma.go.jp/bosai/forecast/data/forecast/130000.json"
 	data := httpRequest(url)
 	weather := strToJson(data)
-	response := weather.ToS()
-	return response
+	// response := ToS(weather)
+	ToS(weather)
+	// return response
 }
 
 func httpRequest(url string) string {
@@ -37,17 +38,18 @@ func httpRequest(url string) string {
 	return string(body)
 }
 
-func strToJson(data string) *Weather {
-	weather := new(Weather)
-	if err := json.Unmarshal([]byte(data), weather); err != nil {
+func strToJson(data string) interface{} {
+	var weather interface{}
+	if err := json.Unmarshal([]byte(data), &weather); err != nil {
 		log.Fatal("JSON Unmarshall Error", err)
 	}
-	return weather
+	return &weather
 }
 
-func (w *Weather) ToS() string {
-	area := fmt.Sprintf("%sの天気です。\n", w.TargetArea)
-	head := fmt.Sprintf("%s\n", w.HeadlineText)
-	text := fmt.Sprintf("%s\n", w.Text)
-	return (area + head + text)
+func ToS(w interface{}) {
+	fmt.Println(w)
+	// area := fmt.Sprintf("%sの天気です。\n", w.TargetArea)
+	// head := fmt.Sprintf("%s\n", w.HeadlineText)
+	// text := fmt.Sprintf("%s\n", w.Text)
+	// return (area + head + text)
 }
