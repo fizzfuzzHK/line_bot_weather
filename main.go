@@ -6,24 +6,20 @@ import (
 	"net/http"
 	"os"
 
+	weather "github.com/fizzfuzzHK/line_bot_weather/module"
 	"github.com/labstack/echo/v4"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
 func main() {
-	e := echo.New()
+	// e := echo.New()
 
-	e.POST("/callback", handlerMainPage())
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
-	})
-	e.GET("/yes", func(c echo.Context) error {
-		return c.String(http.StatusOK, "No, World!")
-	})
-	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
+	// e.POST("/callback", handlerMainPage())
+
+	// e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
 	// LINE Botクライアント生成する
 	// BOT にはチャネルシークレットとチャネルトークンを環境変数から読み込み引数に渡す
-
+	weather.GetWeather()
 	// res := weather.GetWeather()
 	// // テキストメッセージを生成する
 	// message := linebot.NewTextMessage(res)
@@ -76,8 +72,4 @@ func handlerMainPage() echo.HandlerFunc {
 		}
 		return c.String(http.StatusOK, "")
 	}
-}
-
-func genratestring() string {
-	return "ss"
 }
