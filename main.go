@@ -15,7 +15,7 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
-	e.Logger.Fatal(e.Start(":80"))
+	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
 	// LINE Botクライアント生成する
 	// BOT にはチャネルシークレットとチャネルトークンを環境変数から読み込み引数に渡す
 	bot, err := linebot.New(
