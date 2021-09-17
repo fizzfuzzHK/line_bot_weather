@@ -12,7 +12,7 @@ import (
 
 func main() {
 	e := echo.New()
-	e.Use(middleware.Logger())
+
 	e.GET("/hello", handlerMainPage())
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
@@ -41,7 +41,7 @@ func main() {
 	}
 }
 
-func handlerMainPage() echo.handlerFunc {
+func handlerMainPage() echo.HandlerFunc {
 	return func(c echo.Context) error { //c をいじって Request, Responseを色々する
 		str := genratestring()
 		return c.String(http.StatusOK, str)
