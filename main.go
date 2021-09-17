@@ -12,6 +12,8 @@ import (
 
 func main() {
 	e := echo.New()
+	e.Use(middleware.Logger())
+	e.GET("/hello", handlerMainPage())
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
@@ -34,4 +36,15 @@ func main() {
 	if _, err := bot.BroadcastMessage(message).Do(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func handlerMainPage() echo.handlerFunc {
+	return func(c echo.Context) error { //c をいじって Request, Responseを色々する
+		str := genratestring()
+		return c.String(http.StatusOK, str)
+	}
+}
+
+func genratestring() string {
+	return "ss"
 }
