@@ -18,7 +18,7 @@ func main() {
 		return c.String(http.StatusOK, "Hello, World!")
 	})
 	e.GET("/yes", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
+		return c.String(http.StatusOK, "No, World!")
 	})
 	e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
 	// LINE Botクライアント生成する
