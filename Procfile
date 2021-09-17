@@ -1,0 +1,1 @@
+web: bin/line_bot_weather
