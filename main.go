@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	weather "github.com/fizzfuzzHK/line_bot_test/models"
+	"github.com/fizzfuzzHK/line_bot_test/weather"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
