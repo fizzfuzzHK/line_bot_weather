@@ -35,6 +35,7 @@ func main() {
 
 func handlerMainPage() echo.HandlerFunc {
 	return func(c echo.Context) error { //c をいじって Request, Responseを色々する
+		fmt.Println("callbacked")
 		bot, err := linebot.New(
 			os.Getenv("LINE_BOT_CHANNEL_SECRET"),
 			os.Getenv("LINE_BOT_CHANNEL_TOKEN"),
@@ -59,6 +60,7 @@ func handlerMainPage() echo.HandlerFunc {
 					}
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do(); err != nil {
 						log.Print(err)
+						fmt.Println(err)
 					}
 				case *linebot.StickerMessage:
 					{
@@ -66,6 +68,7 @@ func handlerMainPage() echo.HandlerFunc {
 							"sticker id is %s, stickerResourceType is %s", message.StickerID, message.StickerResourceType)
 						if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(replyMessage)).Do(); err != nil {
 							log.Print(err)
+							fmt.Println(err)
 						}
 					}
 				}
