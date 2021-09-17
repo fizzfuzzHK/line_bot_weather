@@ -15,7 +15,8 @@ type Weather struct {
 }
 
 func GetWeather() string {
-	url := "https://www.jma.go.jp/bosai/forecast/data/overview_forecast/130000.json"
+	fmt.Println("rt")
+	url := "https://www.jma.go.jp/bosai/forecast/data/forecast/130000.json"
 	data := httpRequest(url)
 	weather := strToJson(data)
 	response := weather.ToS()
@@ -39,9 +40,10 @@ func httpRequest(url string) string {
 
 func strToJson(data string) *Weather {
 	weather := new(Weather)
-	if err := json.Unmarshal([]byte(data), weather); err != nil {
+	if err := json.Unmarshal([]byte(data), &weather); err != nil {
 		log.Fatal("JSON Unmarshall Error", err)
 	}
+	fmt.Println(weather)
 	return weather
 }
 
