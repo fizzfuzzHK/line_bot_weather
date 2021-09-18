@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	weather "github.com/fizzfuzzHK/line_bot_weather/module"
+	weather "github.com/fizzfuzzHK/line_bot_weather/weather"
 	"github.com/labstack/echo/v4"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
@@ -19,14 +19,25 @@ func main() {
 	// e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
 	// LINE Botクライアント生成する
 	// BOT にはチャネルシークレットとチャネルトークンを環境変数から読み込み引数に渡す
-	weather.GetWeather()
+	res := weather.GetOpenWeather()
 	// res := weather.GetWeather()
-	// // テキストメッセージを生成する
-	// message := linebot.NewTextMessage(res)
-	// // テキストメッセージを友達登録しているユーザー全員に配信する
-	// if _, err := bot.BroadcastMessage(message).Do(); err != nil {
-	// 	log.Fatal(err)
-	// }
+	// テキストメッセージを生成する
+	message := linebot.NewTextMessage(res)
+	emoji := linebot.NewEmoji(10, "5ac1bfd5040ab15980c9b435", "068")
+	message.AddEmoji(emoji)
+	// テキストメッセージを友達登録しているユーザー全員に配信する
+	bot, err := linebot.New(
+		os.Getenv("LINE_BOT_CHANNEL_SECRET"),
+		os.Getenv("LINE_BOT_CHANNEL_TOKEN"),
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(*message)
+	if _, err := bot.BroadcastMessage(message).Do(); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func handlerMainPage() echo.HandlerFunc {

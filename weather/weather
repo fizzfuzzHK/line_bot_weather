@@ -15,11 +15,11 @@ type Weather struct {
 }
 
 func GetWeather() {
-	url := "https://www.jma.go.jp/bosai/forecast/data/forecast/130000.json"
-	data := httpRequest(url)
-	weather := strToJson(data)
-	// response := ToS(weather)
-	ToS(weather)
+	// url := "https://www.jma.go.jp/bosai/forecast/data/forecast/130000.json"
+	// data := httpRequest(url)
+	// weather := strToJson(data)
+	// // response := ToS(weather)
+	// ToS(weather)
 	// return response
 }
 
@@ -39,7 +39,7 @@ func httpRequest(url string) string {
 }
 
 func strToJson(data string) interface{} {
-	var weather interface{}
+	var weather []map[string]interface{}
 	if err := json.Unmarshal([]byte(data), &weather); err != nil {
 		log.Fatal("JSON Unmarshall Error", err)
 	}
@@ -47,7 +47,11 @@ func strToJson(data string) interface{} {
 }
 
 func ToS(w interface{}) {
-	fmt.Println(w)
+	for _, w := range *w.(*[]map[string]interface{}) {
+		fmt.Println(w["timeSeries"].([]interface{})[0].(map[string]interface{})["areas"].([]interface{})[0].(map[string]interface{})["weathers"])
+
+	}
+
 	// area := fmt.Sprintf("%sの天気です。\n", w.TargetArea)
 	// head := fmt.Sprintf("%s\n", w.HeadlineText)
 	// text := fmt.Sprintf("%s\n", w.Text)
