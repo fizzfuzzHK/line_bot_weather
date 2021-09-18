@@ -25,11 +25,10 @@ func GetOpenWeather() string {
 	API_KEY := os.Getenv("OPEN_WEATHER_API_KEY")
 	data := httpRequest(url, API_KEY)
 	w := strToJson(data)
-	weather := ToS(w)
+	weather := jsonToWeather(w)
 
-	res := MakeResponse(weather)
+	res := makePresentation(weather)
 
-	// fmt.Println(weather)
 	return res
 
 }
@@ -75,28 +74,26 @@ func strToJson(data string) map[string]interface{} {
 	return weather
 }
 
-func ToS(w map[string]interface{}) *Weather {
+func jsonToWeather(w map[string]interface{}) *Weather {
 	weather := new(Weather)
-	fmt.Println(w)
 	icon := w["daily"].([]interface{})[0].(map[string]interface{})["weather"].([]interface{})[0].(map[string]interface{})["icon"].(string)
 	weather.WeatherType = getIcon(icon)
 	temp_max := w["daily"].([]interface{})[0].(map[string]interface{})["temp"].(map[string]interface{})["max"].(float64)
 	temp_min := w["daily"].([]interface{})[0].(map[string]interface{})["temp"].(map[string]interface{})["min"].(float64)
 
-	weather.Temp_Max = KelvinToCelsius(temp_max)
-	weather.Temp_Min = KelvinToCelsius(temp_min)
+	weather.Temp_Max = kelvinToCelsius(temp_max)
+	weather.Temp_Min = kelvinToCelsius(temp_min)
 
-	fmt.Println(weather)
 	return weather
 }
 
-func KelvinToCelsius(Kelvin float64) string {
+func kelvinToCelsius(Kelvin float64) string {
 	celsius := math.Round((Kelvin-273.15)*10) / 10
 	strCelsius := strconv.FormatFloat(celsius, 'f', 1, 64)
 	return strCelsius
 }
 
-func MakeResponse(w *Weather) string {
+func makePresentation(w *Weather) string {
 	weatherType := fmt.Sprintf("おはようございます！$\n本日の東京はの天気は%sです\n", w.WeatherType)
 	max := fmt.Sprintf("最高気温：%s度\n", w.Temp_Max)
 	min := fmt.Sprintf("最低気温：%s度", w.Temp_Min)
