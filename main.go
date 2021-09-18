@@ -4,12 +4,12 @@ import (
 	"log"
 	"os"
 
+	"github.com/aws/aws-lambda-go/lambda"
 	weather "github.com/fizzfuzzHK/line_bot_weather/weather"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
-func main() {
-
+func handler() {
 	res := weather.GetOpenWeather()
 
 	message := linebot.NewTextMessage(res)
@@ -27,4 +27,8 @@ func main() {
 	if _, err := bot.BroadcastMessage(message).Do(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func main() {
+	lambda.Start(handler)
 }

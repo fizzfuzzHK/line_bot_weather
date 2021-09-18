@@ -5,6 +5,7 @@ go 1.17
 require github.com/line/line-bot-sdk-go v7.8.0+incompatible
 
 require (
+	github.com/aws/aws-lambda-go v1.26.0 // indirect
 	github.com/labstack/echo/v4 v4.5.0 // indirect
 	github.com/labstack/gommon v0.3.0 // indirect
 	github.com/mattn/go-colorable v0.1.8 // indirect
