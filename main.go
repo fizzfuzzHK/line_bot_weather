@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/aws/aws-lambda-go/lambda"
-	weather "github.com/fizzfuzzHK/line_bot_weather/weather"
+	"github.com/fizzfuzzHK/line_bot_weather/weather"
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
