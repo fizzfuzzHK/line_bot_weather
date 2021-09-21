@@ -94,7 +94,7 @@ func kelvinToCelsius(Kelvin float64) string {
 }
 
 func makePresentation(w *Weather) string {
-	weatherType := fmt.Sprintf("おはようございます！$\n本日の東京はの天気は%sです\n", w.WeatherType)
+	weatherType := fmt.Sprintf("おはようございます！$\n本日の東京の天気は%sです\n", w.WeatherType)
 	max := fmt.Sprintf("最高気温：%s度\n", w.Temp_Max)
 	min := fmt.Sprintf("最低気温：%s度", w.Temp_Min)
 	return string(weatherType + max + min)
